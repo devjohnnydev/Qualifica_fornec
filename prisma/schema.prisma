@@ -1,0 +1,64 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model User {
+  id        String   @id @default(cuid())
+  name      String
+  email     String   @unique
+  password  String
+  company   String
+  role      String   @default("admin")
+  createdAt DateTime @default(now())
+  suppliers Supplier[]
+  criteria  QualificationCriteria[]
+}
+
+model Supplier {
+  id          String   @id @default(cuid())
+  name        String
+  cnpj        String
+  email       String
+  phone       String
+  category    String
+  website     String?
+  address     String?
+  status      String   @default("pending")
+  score       Float    @default(0)
+  notes       String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  userId      String
+  user        User     @relation(fields: [userId], references: [id])
+  scores      SupplierScore[]
+}
+
+model QualificationCriteria {
+  id          String   @id @default(cuid())
+  name        String
+  description String
+  weight      Float
+  maxScore    Int      @default(10)
+  category    String
+  createdAt   DateTime @default(now())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id])
+  scores      SupplierScore[]
+}
+
+model SupplierScore {
+  id          String   @id @default(cuid())
+  score       Float
+  notes       String?
+  supplierId  String
+  criteriaId  String
+  createdAt   DateTime @default(now())
+  supplier    Supplier              @relation(fields: [supplierId], references: [id], onDelete: Cascade)
+  criteria    QualificationCriteria @relation(fields: [criteriaId], references: [id])
+
+  @@unique([supplierId, criteriaId])
+}

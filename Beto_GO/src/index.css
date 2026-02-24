@@ -1,0 +1,215 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');
+
+:root {
+  --primary: #1e3a8a;
+  --primary-dark: #0f1f4d;
+  --secondary: #3b82f6;
+  --accent: #fbbf24;
+  --text: #f0f4ff;
+  --text-muted: #93a8c8;
+  --background: #08132a;
+  --surface: #0d1f45;
+  --eco-green: #fbbf24;
+  --eco-glow: 0 0 20px rgba(251, 191, 36, 0.5);
+  --whatsapp-green: #25d366;
+  --whatsapp-glow: 0 0 20px rgba(37, 211, 102, 0.4);
+  --chrome: linear-gradient(135deg, #fbbf24, #f59e0b, #fde68a, #d97706);
+  --blue-glow: 0 0 20px rgba(30, 58, 138, 0.6);
+  --glass: rgba(13, 31, 69, 0.85);
+  --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: var(--background);
+  color: var(--text);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+section {
+  padding: 5rem 0;
+}
+
+/* Glassmorphism Classes */
+.glass {
+  background: var(--glass);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Chrome/Metallic Text Effect */
+.chrome-text {
+  background: var(--chrome);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block;
+}
+
+.eco-text {
+  color: var(--eco-green);
+  text-shadow: var(--eco-glow);
+}
+
+/* Premium Button Styles */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+  border: none;
+  text-decoration: none;
+}
+
+.btn-primary {
+  background: var(--primary);
+  color: white;
+  box-shadow: var(--blue-glow);
+}
+
+.btn-primary:hover {
+  background: var(--secondary);
+  transform: translateY(-2px);
+  box-shadow: 0 0 30px rgba(59, 130, 246, 0.6);
+}
+
+.btn-whatsapp {
+  background: var(--whatsapp-green);
+  color: white;
+  box-shadow: var(--whatsapp-glow);
+}
+
+.btn-whatsapp:hover {
+  background: #128c7e;
+  transform: translateY(-2px);
+  box-shadow: 0 0 30px rgba(37, 211, 102, 0.6);
+}
+
+.btn-outline {
+  background: transparent;
+  border: 1px solid var(--accent);
+  color: var(--accent);
+}
+
+.btn-outline:hover {
+  background: rgba(251, 191, 36, 0.1);
+  border-color: var(--accent);
+  color: var(--accent);
+  box-shadow: 0 0 20px rgba(251, 191, 36, 0.3);
+}
+
+/* Scroll Animations */
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+[data-reveal].revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Grid Layouts */
+.grid {
+  display: grid;
+  gap: 2rem;
+}
+
+.grid-3 {
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+
+.floating-whatsapp {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition);
+  filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.3));
+}
+
+.floating-whatsapp:hover {
+  transform: scale(1.1) rotate(5deg);
+  filter: drop-shadow(0 12px 24px rgba(37, 211, 102, 0.4));
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.spin {
+  animation: spin 10s linear infinite;
+}
+
+.transparent-icon {
+  mix-blend-mode: lighten;
+  /* This helps remove black backgrounds, but for white we need multiply or screen depending on the context. If the site is dark, and icon is red/white bg, multiply doesn't work well. Let's try to just use a clip or filter if it's a solid white block. Actually, since the icon is red, and site is dark, we can try mix-blend-mode: screen if the icon was light. But for red/white, it's hard. I'll use border-radius: 50% and overflow: hidden if it's a square with white bg. */
+}
+
+@keyframes spin-3d {
+  from {
+    transform: rotateY(0deg);
+  }
+
+  to {
+    transform: rotateY(360deg);
+  }
+}
+
+.spin-3d {
+  animation: spin-3d 5s linear infinite;
+  transform-style: preserve-3d;
+}
+
+.remove-bg-white {
+  filter: url(#remove-white) contrast(110%);
+}
+
+@media (max-width: 768px) {
+  section {
+    padding: 3rem 0;
+  }
+}
+
+.hover-lift:hover {
+  transform: translateY(-3px);
+  filter: drop-shadow(0 5px 15px rgba(251, 191, 36, 0.4));
+}
